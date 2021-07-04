@@ -1,0 +1,10 @@
+.feed-item {
+  display: block;
+  border: 2px solid white;
+  margin: 4px;
+  text-align: left;
+}
+
+.feed-item-image {
+  float: right;
+}
