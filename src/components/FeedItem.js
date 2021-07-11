@@ -1,4 +1,6 @@
-import "./FeedItem.css";
+import { Media } from "react-bootstrap";
+
+//import "./FeedItem.css";
 import FeedItemDate from "./FeedItemDate";
 
 function FeedItem(props) {
@@ -9,7 +11,29 @@ function FeedItem(props) {
   const year = item.date.getFullYear();
 
   return (
-    <div className="feed-item">
+    <Media>
+  <img
+    width={64}
+    height={64}
+    className="mr-3"
+    src="pexels-drone-trotter-6678139.jpg"
+    alt="Generic placeholder"
+  />
+  <Media.Body>
+    <h5>{props.item.title}</h5>
+    <FeedItemDate date={item.date} />
+    <p>
+      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+      ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+      tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+      Donec lacinia congue felis in faucibus.
+    </p>
+  </Media.Body>
+</Media>
+
+
+
+    /* <div className="feed-item">
       <div>
         <h2>{props.item.title}</h2>
       </div>
@@ -23,7 +47,7 @@ function FeedItem(props) {
       <div>
         <button>Share</button>
       </div>
-    </div>
+    </div> */
   );
 }
 

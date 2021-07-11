@@ -7,9 +7,7 @@ function FeedItemDate(props) {
 
   return (
     <div>
-      <div>{month}</div>
-      <div>{day}</div>
-      <div>{year}</div>
+      <div>{month}, {day} {year}</div>
     </div>
   );
 }

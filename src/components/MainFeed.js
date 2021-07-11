@@ -1,29 +1,40 @@
+import React, { useState, useEffect } from 'react';
+import { getFeedListing } from '../helpers/Requests';
 import FeedItem from "./FeedItem";
-import "./MainFeed.css";
+//import "./MainFeed.css";
 
 function MainFeed() {
-  const feedItems = [
-    {
-      id: "1",
-      title: "Canada visa",
-      date: new Date(2021, 5, 28)
-    },
-    {
-      id: "2",
-      title: "Canada is now open..",
-      date: new Date(2021, 5, 29)
-    },
-    {
-      id: "3",
-      title: "Canada welcomes you!",
-      date: new Date(2021, 5, 30)
+
+  const [loaded, setLoaded] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [feedMeta, setFeedMeta] = useState({});
+
+  const getFeedData = async() => {
+    const response = await getFeedListing('https://rss.cbc.ca/lineup/topstories.xml');
+    console.log(response);
+
+    setFeedMeta(response.feed);
+    setListings(response.items)
+  };
+
+  useEffect(() => {
+    if(!loaded) {
+      getFeedData();
+      setLoaded(true);
     }
-  ];
-  return (
-    <div className="main-feed">
-      <FeedItem item={feedItems[0]} />
-      <FeedItem item={feedItems[1]} />
-      <FeedItem item={feedItems[2]} />
+  });
+  
+
+	return (
+    <div>
+      <h2>{feedMeta.title}</h2>
+    { 
+      listings.map((l,i) => {
+        return(
+          <FeedItem key={i} item={l} />
+        );
+      })
+    }
     </div>
   );
 }
