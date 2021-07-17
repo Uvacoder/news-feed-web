@@ -6,32 +6,29 @@ import FeedItemDate from "./FeedItemDate";
 function FeedItem(props) {
   const { item } = props;
 
-  const month = item.date.toLocaleString("en-US", { month: "long" });
-  const day = item.date.toLocaleString("en-US", { day: "2-digit" });
-  const year = item.date.getFullYear();
+  const month = item.pubDate;
+  const day = item.pubDate;
+  const year = item.pubDate;
 
   return (
     <Media>
-  <img
-    width={64}
-    height={64}
-    className="mr-3"
-    src="pexels-drone-trotter-6678139.jpg"
-    alt="Generic placeholder"
-  />
-  <Media.Body>
-    <h5>{props.item.title}</h5>
-    <FeedItemDate date={item.date} />
-    <p>
-      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-      ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-      tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-      Donec lacinia congue felis in faucibus.
-    </p>
-  </Media.Body>
-</Media>
-
-
+      <img
+        width={150}
+        height={100}
+        className="mr-3"
+        src={item.thumbnail}
+        alt="Generic placeholder"
+      />
+      <Media.Body>
+        <h5>{props.item.title}</h5>
+        <FeedItemDate date={item.pubDate} />
+        <div>
+          <a href={item.link} target="_">
+            Read more
+          </a>
+        </div>
+      </Media.Body>
+    </Media>
 
     /* <div className="feed-item">
       <div>
