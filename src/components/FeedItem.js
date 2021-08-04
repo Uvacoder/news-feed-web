@@ -2,6 +2,7 @@ import { Media } from "react-bootstrap";
 
 //import "./FeedItem.css";
 import FeedItemDate from "./FeedItemDate";
+import { extractImageSourceUrl } from "../helpers/StringUtils";
 
 function FeedItem(props) {
   const { item } = props;
@@ -16,7 +17,7 @@ function FeedItem(props) {
         width={150}
         height={100}
         className="mr-3"
-        src={item.thumbnail}
+        src={extractImageSourceUrl(item.content)}
         alt="Generic placeholder"
       />
       <Media.Body>

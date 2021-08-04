@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { feedInfo } from "../constants/RssFeedInfo";
+import firebase from "../config/FirebaseConfig";
+
 import { getFeedListing } from "../helpers/Requests";
 import FeedItem from "./FeedItem";
 import NewsDropDown from "./NewsDropDown";
@@ -7,23 +8,45 @@ import NewsDropDown from "./NewsDropDown";
 
 function MainFeed() {
   const [loaded, setLoaded] = useState(false);
+  const [topics, setTopics] = useState([]);
   const [listings, setListings] = useState([]);
   const [feedMeta, setFeedMeta] = useState({});
 
-  const getFeedData = async (topic) => {
-    const response = await getFeedListing(topic.feedLink);
-    //console.log(response);
+  const getTopics = () => {
+    const dbRef = firebase.database().ref();
+    dbRef
+      .child("topics")
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let response = snapshot.val();
+          console.log(response);
+          setTopics(Object.values(response));
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    setFeedMeta(response.data.feed);
-    setListings(response.data.items);
+  const getFeedData = async (topic) => {
+    const response = await getFeedListing(topic.feedUrl);
+    console.log(response);
+
+    setFeedMeta({ title: response.title });
+    setListings(response.items);
   };
 
   useEffect(() => {
+    console.log("Inside useEffect()");
     if (!loaded) {
-      getFeedData(feedInfo[0]);
+      getTopics();
       setLoaded(true);
+      console.log("Topics loaded!");
     }
-  });
+  }, [loaded]);
 
   const topicSelectionHandler = (topic, e) => {
     //console.log(topic);
@@ -32,7 +55,10 @@ function MainFeed() {
 
   return (
     <React.Fragment>
-      <NewsDropDown handleTopicSelection={topicSelectionHandler} />
+      <NewsDropDown
+        topics={topics}
+        handleTopicSelection={topicSelectionHandler}
+      />
       <div>
         <h2>{feedMeta.title}</h2>
         {listings.map((l, i) => {
