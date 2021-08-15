@@ -1,4 +1,10 @@
-const extractImageSourceUrl = (content) => {
+const extractImageSourceUrl = (item) => {
+  if (item.enclosure !== undefined) {
+    return item.enclosure.url;
+  }
+
+  let content = item.content;
+
   let startIndex = content.indexOf("src=") + 5;
   let endIndex = content.indexOf("alt=") - 2;
 

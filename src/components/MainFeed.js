@@ -9,6 +9,7 @@ import NewsDropDown from "./NewsDropDown";
 function MainFeed() {
   const [loaded, setLoaded] = useState(false);
   const [topics, setTopics] = useState([]);
+  const [cityTopics, setCityTopics] = useState([]);
   const [listings, setListings] = useState([]);
   const [feedMeta, setFeedMeta] = useState({});
 
@@ -31,6 +32,25 @@ function MainFeed() {
       });
   };
 
+  const getCityTopics = () => {
+    const dbRef = firebase.database().ref();
+    dbRef
+      .child("cities")
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let response = snapshot.val();
+          console.log(response);
+          setCityTopics(Object.values(response));
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const getFeedData = async (topic) => {
     const response = await getFeedListing(topic.feedUrl);
     console.log(response);
@@ -43,6 +63,7 @@ function MainFeed() {
     console.log("Inside useEffect()");
     if (!loaded) {
       getTopics();
+      getCityTopics();
       setLoaded(true);
       console.log("Topics loaded!");
     }
@@ -56,7 +77,13 @@ function MainFeed() {
   return (
     <React.Fragment>
       <NewsDropDown
+        topicName="General Topic"
         topics={topics}
+        handleTopicSelection={topicSelectionHandler}
+      />
+      <NewsDropDown
+        topicName="Cities"
+        topics={cityTopics}
         handleTopicSelection={topicSelectionHandler}
       />
       <div>

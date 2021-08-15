@@ -1,8 +1,10 @@
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 function NewsDropDown(props) {
+  const title = "Select " + props.topicName;
+
   return (
-    <DropdownButton id="dropdown-basic-button" title="Select Topic">
+    <DropdownButton id="dropdown-basic-button" title={title}>
       {props.topics.map((feed) => {
         return (
           <Dropdown.Item

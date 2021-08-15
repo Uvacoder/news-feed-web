@@ -17,7 +17,7 @@ function FeedItem(props) {
         width={150}
         height={100}
         className="mr-3"
-        src={extractImageSourceUrl(item.content)}
+        src={extractImageSourceUrl(item)}
         alt="Generic placeholder"
       />
       <Media.Body>
