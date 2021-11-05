@@ -3,9 +3,9 @@ import "./App.css";
 
 import React from "react";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import Toast from "react-bootstrap/Toast";
+// import Toast from "react-bootstrap/Toast";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 
 import MainFeed from "./components/MainFeed";
 
