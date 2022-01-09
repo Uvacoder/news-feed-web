@@ -7,9 +7,9 @@ import { extractImageSourceUrl } from "../helpers/StringUtils";
 function FeedItem(props) {
   const { item } = props;
 
-  const month = item.pubDate;
-  const day = item.pubDate;
-  const year = item.pubDate;
+ // const month = item.pubDate;
+ // const day = item.pubDate;
+ // const year = item.pubDate;
 
   return (
     <Media>
